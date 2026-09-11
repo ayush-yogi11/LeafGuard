@@ -1,0 +1,76 @@
+<nav class="bg-[#1E4620] text-[#F4F6F0] shadow-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+
+            <a href="{% url 'core:home' %}" class="flex items-center gap-2 text-lg font-semibold tracking-tight">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M12 21c-4-2-7-6-7-11a7 7 0 0114 0c0 5-3 9-7 11z M12 10a2 2 0 100 4 2 2 0 000-4z" />
+    </svg>
+    Plant Doctor
+</a>
+
+            <!-- Desktop nav -->
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a href="{% url 'core:home' %}" class="hover:text-[#4E9F3D] transition">Home</a>
+                <a href="{% url 'blog:list' %}" class="hover:text-[#4E9F3D] transition">Blog</a>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'scanner:scan' %}" class="hover:text-[#4E9F3D] transition">Scan Leaf</a>
+                    <a href="{% url 'scanner:history' %}" class="hover:text-[#4E9F3D] transition">History</a>
+                    <a href="{% url 'accounts:profile' %}" class="hover:text-[#4E9F3D] transition">Profile</a>
+
+                    {% if not user.is_premium %}
+                        <span class="bg-[#4E9F3D] text-white text-xs px-2 py-1 rounded-full">
+                            {{ user.get_remaining_scans }} scans left today
+                        </span>
+                    {% else %}
+                        <span class="bg-yellow-500 text-white text-xs px-2 py-1 rounded-full">★ Premium</span>
+                    {% endif %}
+
+                    <form method="post" action="{% url 'accounts:logout' %}" class="inline">
+                        {% csrf_token %}
+                        <button type="submit" class="hover:text-red-300 transition">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'accounts:login' %}" class="hover:text-[#4E9F3D] transition">Login</a>
+                    <a href="{% url 'accounts:register' %}"
+                       class="bg-[#4E9F3D] px-4 py-2 rounded-lg hover:bg-[#3d7f31] transition">
+                        Sign Up
+                    </a>
+                {% endif %}
+            </div>
+
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-btn" class="md:hidden focus:outline-none" aria-label="Toggle menu">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile nav (hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden pb-4 space-y-2 text-sm font-medium">
+            <a href="{% url 'core:home' %}" class="block py-2 hover:text-[#4E9F3D]">Home</a>
+            <a href="{% url 'blog:list' %}" class="block py-2 hover:text-[#4E9F3D]">Blog</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'scanner:scan' %}" class="block py-2 hover:text-[#4E9F3D]">Scan Leaf</a>
+                <a href="{% url 'scanner:history' %}" class="block py-2 hover:text-[#4E9F3D]">History</a>
+                <a href="{% url 'accounts:profile' %}" class="block py-2 hover:text-[#4E9F3D]">Profile</a>
+                <form method="post" action="{% url 'accounts:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="block py-2 hover:text-red-300 w-full text-left">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'accounts:login' %}" class="block py-2 hover:text-[#4E9F3D]">Login</a>
+                <a href="{% url 'accounts:register' %}" class="block py-2 hover:text-[#4E9F3D]">Sign Up</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<script>
+    document.getElementById('mobile-menu-btn').addEventListener('click', function () {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+</script>

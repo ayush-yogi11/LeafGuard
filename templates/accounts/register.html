@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Sign Up — Plant Doctor{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white rounded-xl border border-gray-200 p-8 mt-8">
+    <h1 class="text-xl font-semibold text-[#1E4620] mb-6">Create your account</h1>
+
+    <form method="post" class="space-y-4" novalidate>
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <p class="text-red-600 text-xs mt-1">{{ field.errors.0 }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <p class="text-xs text-gray-400">
+            Use at least 8 characters, avoiding common passwords.
+        </p>
+
+        {% if form.non_field_errors %}
+            <p class="text-red-600 text-sm">{{ form.non_field_errors.0 }}</p>
+        {% endif %}
+
+        <button type="submit"
+                class="w-full bg-[#4E9F3D] text-white py-2.5 rounded-lg font-medium hover:bg-[#3d7f31] transition">
+            Sign up
+        </button>
+    </form>
+
+    <p class="text-center text-sm text-gray-500 mt-6">
+        Already have an account?
+        <a href="{% url 'accounts:login' %}" class="text-[#4E9F3D] font-medium hover:underline">Log in</a>
+    </p>
+</div>
+{% endblock %}

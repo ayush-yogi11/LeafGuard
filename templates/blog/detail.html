@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }} — Plant Doctor{% endblock %}
+
+{% block content %}
+<article class="max-w-3xl mx-auto bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    {% if post.featured_image %}
+        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="w-full h-72 object-cover">
+    {% endif %}
+
+    <div class="p-8">
+        {% if post.category %}
+            <span class="text-xs font-semibold text-[#4E9F3D] uppercase">{{ post.category.name }}</span>
+        {% endif %}
+        <h1 class="text-3xl font-bold text-[#1E4620] mt-2">{{ post.title }}</h1>
+        <p class="text-sm text-gray-400 mt-2">
+            By {{ post.author.email|default:"Plant Doctor Team" }} &middot; {{ post.published_at|date:"M d, Y" }}
+        </p>
+
+        <div class="prose max-w-none mt-6 text-gray-700 leading-relaxed">
+            {{ post.content|safe }}
+        </div>
+
+        {% if post.tags.all %}
+            <div class="flex flex-wrap gap-2 mt-8">
+                {% for tag in post.tags.all %}
+                    <span class="bg-[#F4F6F0] text-[#1E4620] text-xs px-3 py-1 rounded-full">#{{ tag.name }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</article>
+{% endblock %}

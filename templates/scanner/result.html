@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Scan Result — Plant Doctor{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <img src="{{ scan.image.url }}" alt="{{ scan.disease_name }}" class="w-full h-64 object-cover">
+
+        <div class="p-8">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+                <h1 class="text-2xl font-bold text-[#1E4620]">{{ scan.disease_name }}</h1>
+                {% if scan.is_healthy %}
+                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">Healthy</span>
+                {% else %}
+                    <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-semibold">Disease Detected</span>
+                {% endif %}
+            </div>
+
+            <p class="text-gray-500 text-sm mt-1">
+                {{ scan.confidence }}% confidence &middot; scanned {{ scan.created_at|timesince }} ago
+            </p>
+
+            <div class="mt-6 space-y-4">
+                <div>
+                    <h2 class="font-semibold text-[#1E4620] mb-1">Symptoms</h2>
+                    <p class="text-gray-700 text-sm leading-relaxed">{{ scan.symptoms }}</p>
+                </div>
+                <div>
+                    <h2 class="font-semibold text-[#1E4620] mb-1">Recommended Treatment</h2>
+                    <p class="text-gray-700 text-sm leading-relaxed">{{ scan.treatment }}</p>
+                </div>
+            </div>
+
+            <div class="flex gap-3 mt-8">
+                <a href="{% url 'scanner:scan' %}"
+                   class="flex-1 text-center bg-[#4E9F3D] text-white py-2.5 rounded-lg font-semibold hover:bg-[#3d7f31] transition">
+                    Scan Another Leaf
+                </a>
+                <a href="{% url 'scanner:history' %}"
+                   class="flex-1 text-center border border-[#1E4620] text-[#1E4620] py-2.5 rounded-lg font-semibold hover:bg-[#1E4620] hover:text-white transition">
+                    View History
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

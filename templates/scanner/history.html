@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Scan History — Plant Doctor{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-bold text-[#1E4620] mb-6">Your Scan History</h1>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    {% for scan in scans %}
+        <a href="{% url 'scanner:result' scan.pk %}"
+           class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
+            <img src="{{ scan.image.url }}" alt="{{ scan.disease_name }}" class="w-full h-40 object-cover">
+            <div class="p-4">
+                <div class="flex justify-between items-start gap-2">
+                    <p class="font-semibold text-[#1E4620] text-sm">{{ scan.disease_name }}</p>
+                    {% if scan.is_healthy %}
+                        <span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full whitespace-nowrap">Healthy</span>
+                    {% else %}
+                        <span class="bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full whitespace-nowrap">Disease</span>
+                    {% endif %}
+                </div>
+                <p class="text-xs text-gray-500 mt-1">{{ scan.confidence }}% &middot; {{ scan.created_at|date:"M d, Y" }}</p>
+            </div>
+        </a>
+    {% empty %}
+        <p class="text-gray-500 col-span-full text-center py-12">
+            No scans yet. <a href="{% url 'scanner:scan' %}" class="text-[#4E9F3D] font-semibold hover:underline">Scan your first leaf</a>.
+        </p>
+    {% endfor %}
+</div>
+{% endblock %}

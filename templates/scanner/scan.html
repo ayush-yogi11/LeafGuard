@@ -16,8 +16,7 @@
     <form method="post" enctype="multipart/form-data" id="scan-form" class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
         {% csrf_token %}
 
-        <!-- Drag-and-drop zone. The real file input is hidden (see forms.py widget attrs)
-             and triggered via JS — clicking or dropping both populate the same input. -->
+      
         <div id="drop-zone"
              class="drop-zone border-2 border-dashed border-gray-300 rounded-xl p-10 text-center cursor-pointer transition">
             <div id="drop-zone-prompt">

@@ -98,7 +98,7 @@ Before running the project, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/LeafGuard.git
+git clone https://github.com/ayush-yogi11/LeafGuard
 cd LeafGuard
 ```
 
